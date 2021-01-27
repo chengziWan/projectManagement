@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('施工日志表修改')"/>
+</head>
+<body>
+<form class="layui-form" action=""  th:object="${BusDailyLog}">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{iD}" name="iD" lay-verify="title"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">日报日期</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{rBRQ}" type="text" name="rBRQ" autocomplete="off" placeholder="日报日期" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">星期几</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{xQJ}" type="text" name="xQJ" autocomplete="off" placeholder="星期几" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">天气</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{tQ}" type="text" name="tQ" autocomplete="off" placeholder="天气" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">施工部位</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{sGBW}" type="text" name="sGBW" autocomplete="off" placeholder="施工部位" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">施工内容</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{sGNR}" type="text" name="sGNR" autocomplete="off" placeholder="施工内容" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">形象进度</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{xXJD}" type="text" name="xXJD" autocomplete="off" placeholder="形象进度" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">施工人员</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{sGRY}" type="text" name="sGRY" autocomplete="off" placeholder="施工人员" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">施工进度</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{sGJD}" type="text" name="sGJD" autocomplete="off" placeholder="施工进度" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">技术质量记录</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{jSZLJL}" type="text" name="jSZLJL" autocomplete="off" placeholder="技术质量记录" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">进场材料记录</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{jCCLJL}" type="text" name="jCCLJL" autocomplete="off" placeholder="进场材料记录" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">工程负责人</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{gCFZR}" type="text" name="gCFZR" autocomplete="off" placeholder="工程负责人" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">记录人</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{jLR}" type="text" name="jLR" autocomplete="off" placeholder="记录人" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">添加时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{tJSJ}" type="text" name="tJSJ" autocomplete="off" placeholder="添加时间" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                    lay-filter="busDailyLog-update">
+                <i class="layui-icon layui-icon-ok"></i>
+				提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+				重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/BusDailyLogController";
+		
+        form.on('submit(busDailyLog-update)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/edit',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("busDailyLog-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

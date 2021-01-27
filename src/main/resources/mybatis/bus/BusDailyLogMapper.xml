@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.v2.mapper.auto.BusDailyLogMapper">
+  <resultMap id="BaseResultMap" type="com.fc.bus.model.auto.BusDailyLog">
+    <result column="ID" jdbcType="VARCHAR" property="iD" />
+    <result column="RBRQ" jdbcType="VARCHAR" property="rBRQ" />
+    <result column="XQJ" jdbcType="VARCHAR" property="xQJ" />
+    <result column="TQ" jdbcType="VARCHAR" property="tQ" />
+    <result column="SGBW" jdbcType="VARCHAR" property="sGBW" />
+    <result column="SGNR" jdbcType="VARCHAR" property="sGNR" />
+    <result column="XXJD" jdbcType="VARCHAR" property="xXJD" />
+    <result column="SGRY" jdbcType="VARCHAR" property="sGRY" />
+    <result column="SGJD" jdbcType="VARCHAR" property="sGJD" />
+    <result column="JSZLJL" jdbcType="VARCHAR" property="jSZLJL" />
+    <result column="JCCLJL" jdbcType="VARCHAR" property="jCCLJL" />
+    <result column="GCFZR" jdbcType="VARCHAR" property="gCFZR" />
+    <result column="JLR" jdbcType="VARCHAR" property="jLR" />
+    <result column="TJSJ" jdbcType="VARCHAR" property="tJSJ" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+  
+	  	  	      	ID,
+       	  	      	RBRQ,
+       	  	      	XQJ,
+       	  	      	TQ,
+       	  	      	SGBW,
+       	  	      	SGNR,
+       	  	      	XXJD,
+       	  	      	SGRY,
+       	  	      	SGJD,
+       	  	      	JSZLJL,
+       	  	      	JCCLJL,
+       	  	      	GCFZR,
+       	  	      	JLR,
+       	  	    	  	TJSJ
+       	  	
+  </sql>
+  
+  <select id="selectByExample" parameterType="com.fc.bus.model.auto.BusDailyLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_bus_daily_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_bus_daily_log
+    where ID = #{iD,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_bus_daily_log
+    where ID = #{iD,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fc.bus.model.auto.BusDailyLogExample">
+    delete from t_bus_daily_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.fc.bus.model.auto.BusDailyLog">
+    insert into t_bus_daily_log (
+      	  	       ID,
+       	  	       RBRQ,
+       	  	       XQJ,
+       	  	       TQ,
+       	  	       SGBW,
+       	  	       SGNR,
+       	  	       XXJD,
+       	  	       SGRY,
+       	  	       SGJD,
+       	  	       JSZLJL,
+       	  	       JCCLJL,
+       	  	       GCFZR,
+       	  	       JLR,
+       	  	    	  TJSJ
+       	    )
+    values (
+	  	  	      	#{iD,jdbcType=VARCHAR},
+       	  	      	#{rBRQ,jdbcType=VARCHAR},
+       	  	      	#{xQJ,jdbcType=VARCHAR},
+       	  	      	#{tQ,jdbcType=VARCHAR},
+       	  	      	#{sGBW,jdbcType=VARCHAR},
+       	  	      	#{sGNR,jdbcType=VARCHAR},
+       	  	      	#{xXJD,jdbcType=VARCHAR},
+       	  	      	#{sGRY,jdbcType=VARCHAR},
+       	  	      	#{sGJD,jdbcType=VARCHAR},
+       	  	      	#{jSZLJL,jdbcType=VARCHAR},
+       	  	      	#{jCCLJL,jdbcType=VARCHAR},
+       	  	      	#{gCFZR,jdbcType=VARCHAR},
+       	  	      	#{jLR,jdbcType=VARCHAR},
+       	  	    	  #{tJSJ,jdbcType=VARCHAR}
+       	    )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.fc.bus.model.auto.BusDailyLog">
+    insert into t_bus_daily_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+          
+      <if test="iD != null">
+        ID,
+      </if>
+         
+      <if test="rBRQ != null">
+        RBRQ,
+      </if>
+         
+      <if test="xQJ != null">
+        XQJ,
+      </if>
+         
+      <if test="tQ != null">
+        TQ,
+      </if>
+         
+      <if test="sGBW != null">
+        SGBW,
+      </if>
+         
+      <if test="sGNR != null">
+        SGNR,
+      </if>
+         
+      <if test="xXJD != null">
+        XXJD,
+      </if>
+         
+      <if test="sGRY != null">
+        SGRY,
+      </if>
+         
+      <if test="sGJD != null">
+        SGJD,
+      </if>
+         
+      <if test="jSZLJL != null">
+        JSZLJL,
+      </if>
+         
+      <if test="jCCLJL != null">
+        JCCLJL,
+      </if>
+         
+      <if test="gCFZR != null">
+        GCFZR,
+      </if>
+         
+      <if test="jLR != null">
+        JLR,
+      </if>
+         
+      <if test="tJSJ != null">
+        TJSJ,
+      </if>
+         </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="iD != null">
+        #{iD,jdbcType=VARCHAR},
+      </if>
+          <if test="rBRQ != null">
+        #{rBRQ,jdbcType=VARCHAR},
+      </if>
+          <if test="xQJ != null">
+        #{xQJ,jdbcType=VARCHAR},
+      </if>
+          <if test="tQ != null">
+        #{tQ,jdbcType=VARCHAR},
+      </if>
+          <if test="sGBW != null">
+        #{sGBW,jdbcType=VARCHAR},
+      </if>
+          <if test="sGNR != null">
+        #{sGNR,jdbcType=VARCHAR},
+      </if>
+          <if test="xXJD != null">
+        #{xXJD,jdbcType=VARCHAR},
+      </if>
+          <if test="sGRY != null">
+        #{sGRY,jdbcType=VARCHAR},
+      </if>
+          <if test="sGJD != null">
+        #{sGJD,jdbcType=VARCHAR},
+      </if>
+          <if test="jSZLJL != null">
+        #{jSZLJL,jdbcType=VARCHAR},
+      </if>
+          <if test="jCCLJL != null">
+        #{jCCLJL,jdbcType=VARCHAR},
+      </if>
+          <if test="gCFZR != null">
+        #{gCFZR,jdbcType=VARCHAR},
+      </if>
+          <if test="jLR != null">
+        #{jLR,jdbcType=VARCHAR},
+      </if>
+          <if test="tJSJ != null">
+        #{tJSJ,jdbcType=VARCHAR},
+      </if>
+        </trim>
+  </insert>
+  
+  <select id="countByExample" parameterType="com.fc.bus.model.auto.BusDailyLogExample" resultType="java.lang.Long">
+    select count(*) from t_bus_daily_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_bus_daily_log
+    <set>
+          <if test="record.iD != null">
+        ID = #{record.iD,jdbcType=VARCHAR},
+      </if>
+          <if test="record.rBRQ != null">
+        RBRQ = #{record.rBRQ,jdbcType=VARCHAR},
+      </if>
+          <if test="record.xQJ != null">
+        XQJ = #{record.xQJ,jdbcType=VARCHAR},
+      </if>
+          <if test="record.tQ != null">
+        TQ = #{record.tQ,jdbcType=VARCHAR},
+      </if>
+          <if test="record.sGBW != null">
+        SGBW = #{record.sGBW,jdbcType=VARCHAR},
+      </if>
+          <if test="record.sGNR != null">
+        SGNR = #{record.sGNR,jdbcType=VARCHAR},
+      </if>
+          <if test="record.xXJD != null">
+        XXJD = #{record.xXJD,jdbcType=VARCHAR},
+      </if>
+          <if test="record.sGRY != null">
+        SGRY = #{record.sGRY,jdbcType=VARCHAR},
+      </if>
+          <if test="record.sGJD != null">
+        SGJD = #{record.sGJD,jdbcType=VARCHAR},
+      </if>
+          <if test="record.jSZLJL != null">
+        JSZLJL = #{record.jSZLJL,jdbcType=VARCHAR},
+      </if>
+          <if test="record.jCCLJL != null">
+        JCCLJL = #{record.jCCLJL,jdbcType=VARCHAR},
+      </if>
+          <if test="record.gCFZR != null">
+        GCFZR = #{record.gCFZR,jdbcType=VARCHAR},
+      </if>
+          <if test="record.jLR != null">
+        JLR = #{record.jLR,jdbcType=VARCHAR},
+      </if>
+          <if test="record.tJSJ != null">
+        TJSJ = #{record.tJSJ,jdbcType=VARCHAR},
+      </if>
+         
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  
+  <update id="updateByExample" parameterType="map">
+    update t_bus_daily_log
+    set
+            	     	 
+    	 ID = #{record.iD,jdbcType=VARCHAR},
+    	         	     	 
+    	 RBRQ = #{record.rBRQ,jdbcType=VARCHAR},
+    	         	     	 
+    	 XQJ = #{record.xQJ,jdbcType=VARCHAR},
+    	         	     	 
+    	 TQ = #{record.tQ,jdbcType=VARCHAR},
+    	         	     	 
+    	 SGBW = #{record.sGBW,jdbcType=VARCHAR},
+    	         	     	 
+    	 SGNR = #{record.sGNR,jdbcType=VARCHAR},
+    	         	     	 
+    	 XXJD = #{record.xXJD,jdbcType=VARCHAR},
+    	         	     	 
+    	 SGRY = #{record.sGRY,jdbcType=VARCHAR},
+    	         	     	 
+    	 SGJD = #{record.sGJD,jdbcType=VARCHAR},
+    	         	     	 
+    	 JSZLJL = #{record.jSZLJL,jdbcType=VARCHAR},
+    	         	     	 
+    	 JCCLJL = #{record.jCCLJL,jdbcType=VARCHAR},
+    	         	     	 
+    	 GCFZR = #{record.gCFZR,jdbcType=VARCHAR},
+    	         	     	 
+    	 JLR = #{record.jLR,jdbcType=VARCHAR},
+    	         	     	 
+    	 TJSJ = #{record.tJSJ,jdbcType=VARCHAR}
+    	         
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  
+      <update id="updateByPrimaryKeySelective" parameterType="com.fc.bus.model.auto.BusDailyLog">
+    update t_bus_daily_log
+    <set>
+                          
+      <if test="rBRQ != null">
+        RBRQ = #{rBRQ,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="xQJ != null">
+        XQJ = #{xQJ,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="tQ != null">
+        TQ = #{tQ,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="sGBW != null">
+        SGBW = #{sGBW,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="sGNR != null">
+        SGNR = #{sGNR,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="xXJD != null">
+        XXJD = #{xXJD,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="sGRY != null">
+        SGRY = #{sGRY,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="sGJD != null">
+        SGJD = #{sGJD,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="jSZLJL != null">
+        JSZLJL = #{jSZLJL,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="jCCLJL != null">
+        JCCLJL = #{jCCLJL,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="gCFZR != null">
+        GCFZR = #{gCFZR,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="jLR != null">
+        JLR = #{jLR,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="tJSJ != null">
+        TJSJ = #{tJSJ,jdbcType=VARCHAR},
+      </if>
+              </set>
+    
+    where 
+            
+    ID = #{iD,jdbcType=VARCHAR}
+                                                                                                                  
+  </update>
+
+      	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	
+
+  <update id="updateByPrimaryKey" parameterType="com.fc.bus.model.auto.BusDailyLog">
+    update t_bus_daily_log
+    set 
+    		 		 	  	  
+		RBRQ = #{rBRQ,jdbcType=VARCHAR},
+	  	 		 	  	  
+		XQJ = #{xQJ,jdbcType=VARCHAR},
+	  	 		 	  	  
+		TQ = #{tQ,jdbcType=VARCHAR},
+	  	 		 	  	  
+		SGBW = #{sGBW,jdbcType=VARCHAR},
+	  	 		 	  	  
+		SGNR = #{sGNR,jdbcType=VARCHAR},
+	  	 		 	  	  
+		XXJD = #{xXJD,jdbcType=VARCHAR},
+	  	 		 	  	  
+		SGRY = #{sGRY,jdbcType=VARCHAR},
+	  	 		 	  	  
+		SGJD = #{sGJD,jdbcType=VARCHAR},
+	  	 		 	  	  
+		JSZLJL = #{jSZLJL,jdbcType=VARCHAR},
+	  	 		 	  	  
+		JCCLJL = #{jCCLJL,jdbcType=VARCHAR},
+	  	 		 	  	  
+		GCFZR = #{gCFZR,jdbcType=VARCHAR},
+	  	 		 	  	  
+		JLR = #{jLR,jdbcType=VARCHAR},
+	  	 		 	  		
+		TJSJ = #{tJSJ,jdbcType=VARCHAR}
+	  	 		
+    where 
+            
+    ID = #{iD,jdbcType=VARCHAR}
+                                                                                                                    
+  </update>
+  
+                                                                          
+</mapper>
