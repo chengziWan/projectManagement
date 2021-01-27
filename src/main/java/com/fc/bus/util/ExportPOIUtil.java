@@ -2,7 +2,9 @@ package com.fc.bus.util;
 
 import org.apache.poi.xwpf.usermodel.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -36,9 +38,8 @@ public class ExportPOIUtil
     }
 
     public static void getBuild(String  tmpFile, List<Map<String, String>> contentMapList, String exportFile){
-        int i=0;
         for(Map<String, String> contentMap:contentMapList){
-            getBuild(tmpFile, contentMap, "D:/aa"+(++i)+".doc");
+            getBuild(tmpFile, contentMap, "D:/施工日志"+(contentMap.get("rBRQ"))+".doc");
         }
     }
     public static void getBuild(String  tmpFile, Map<String, String> contentMap, String exportFile)
@@ -70,13 +71,13 @@ public class ExportPOIUtil
                         for (int ii = 0, runSie = run.size(); ii < runSie; ii++){
                             text = run.get(ii).getText(run.get(ii).getTextPosition());
                             String aftertext = text;
-                            System.out.println("text="+aftertext);
+                            //System.out.println("text="+aftertext);
                             for (Map.Entry<String, String> e : contentMap.entrySet()) {
                                 if (cell.getText().contains("${" + e.getKey() + "}")) {
                                     aftertext = aftertext.replace("${" + e.getKey() + "}",e.getValue());
                                 }
                             }
-                            System.out.println("aftertext="+aftertext);
+                            //System.out.println("aftertext="+aftertext);
                             run.get(ii).setText(aftertext,0);
                         }
                     }
@@ -93,6 +94,45 @@ public class ExportPOIUtil
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    //以字节码的方式下载
+    public HttpServletResponse download(byte[] bytes, String fileName, String fileExt, HttpServletResponse response )
+    {
+        try
+        {
+            response.setContentType("text/html;charset=UTF-8");
+            // 清空response
+            response.reset();
+            // 设置response的Header，防止中文乱码...
+            fileName = getFileNameEncoder(fileName) + "." + fileExt;
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+
+            response.addHeader("Content-Length", "" + bytes.length);
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            toClient.write(bytes);
+            toClient.flush();
+            toClient.close();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return response;
+    }
+    private String getFileNameEncoder(String fileName) throws UnsupportedEncodingException
+    {
+        if (false)//isMSIE
+        {
+            //IE浏览器的乱码问题解决
+            return URLEncoder.encode(fileName, "UTF-8");
+        }
+        else
+        {
+            //万能乱码问题解决
+            return new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
         }
     }
 }

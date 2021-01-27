@@ -465,6 +465,15 @@
     ID = #{iD,jdbcType=VARCHAR}
                                                                                                                     
   </update>
-  
+  <select id="queryListByIDs" parameterType="list" resultType="map">
+    select
+    iD,rBRQ,xQJ,tQ,sGBW,sGNR,xXJD,sGRY,sGJD,jSZLJL,jCCLJL,gCFZR,jLR,tJSJ
+    from t_bus_daily_log
+    where id in
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+      order by rBRQ
+  </select>
                                                                           
 </mapper>

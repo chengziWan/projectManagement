@@ -32,6 +32,8 @@
 </body>
 
 <script type="text/html" id="busDailyLog-toolbar">
+
+
     <button shiro:hasPermission="gen:busDailyLog:add" class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
         <i class="layui-icon layui-icon-add-1"></i>
 		 新增
@@ -40,7 +42,7 @@
         <i class="layui-icon layui-icon-delete"></i>
 		删除
     </button>
-    <button class="pear-btn pear-btn-warming pear-btn-sm" lay-event="export" title="导出"><i class="layui-icon layui-icon-export"></i>
+    <button class="pear-btn pear-btn-warming pear-btn-md" lay-event="export" title="导出"><i class="layui-icon layui-icon-export"></i>
         导出
     </button>
 </script>
@@ -205,7 +207,7 @@
             }
             let ids = "";
             for (let i = 0; i < data.length; i++) {
-                ids += data[i].id + ",";
+                ids += data[i].iD + ",";
             }
             ids = ids.substr(0, ids.length - 1);
             layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
@@ -238,7 +240,7 @@
             }
             let ids = "";
             for (let i = 0; i < data.length; i++) {
-                ids += data[i].id + ",";
+                ids += data[i].iD + ",";
             }
             ids = ids.substr(0, ids.length - 1);
             layer.confirm('确定要导出这些数据', {icon: 3, title: '提示'}, function (index) {

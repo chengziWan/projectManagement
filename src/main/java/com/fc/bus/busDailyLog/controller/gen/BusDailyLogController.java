@@ -1,10 +1,14 @@
 package com.fc.bus.busDailyLog.controller.gen;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fc.bus.busDailyLog.service.BusDailyLogService;
 import com.fc.bus.model.auto.BusDailyLog;
+import com.fc.bus.util.ExportPOIUtil;
+import com.fc.bus.util.WeatherUtil;
 import com.fc.v2.common.base.BaseController;
 import com.fc.v2.common.domain.AjaxResult;
 import com.fc.v2.common.domain.ResultTable;
+import com.fc.v2.common.support.ConvertUtil;
 import com.fc.v2.model.custom.Tablepar;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -17,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 施工日志表Controller
@@ -87,12 +92,23 @@ public class BusDailyLogController extends BaseController{
 	@RequiresPermissions("gen:busDailyLog:add")
 	@ResponseBody
 	public AjaxResult add(BusDailyLog busDailyLog){
-		int b=busDailyLogService.insertSelective(busDailyLog);
-		if(b>0){
-			return success();
+		String month = busDailyLog.getRBRQ();
+		int i=0;
+		List<BusDailyLog> list = WeatherUtil.getWeatherByYearMonth(month);
+		for(BusDailyLog log :list){
+			log.setGCFZR(busDailyLog.getGCFZR());
+			log.setJLR(busDailyLog.getJLR());
+			int b=busDailyLogService.insertSelective(log);
+			if(b>0){
+				i++;
+			}
+		}
+		if(i>0){
+			return success("生成"+i+"条");
 		}else{
 			return error();
 		}
+
 	}
 	
 	/**
@@ -150,49 +166,15 @@ public class BusDailyLogController extends BaseController{
 	 */
 	@ApiOperation(value = "导出", notes = "导出")
 	@GetMapping("/export")
-	public String export(String ids, HttpServletRequest request, HttpServletResponse response)
+	@ResponseBody
+	public AjaxResult export(String ids, HttpServletRequest request, HttpServletResponse response)
 	{
-		String fileName = "wcc.png";// 文件名
-		if (fileName != null) {
-			//设置文件路径
-			File file = new File("D://20210127104059.png");
-			if (file.exists()) {
-				response.setContentType("application/force-download");// 设置强制下载不打开
-				response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-				byte[] buffer = new byte[1024];
-				FileInputStream fis = null;
-				BufferedInputStream bis = null;
-				try {
-					fis = new FileInputStream(file);
-					bis = new BufferedInputStream(fis);
-					OutputStream os = response.getOutputStream();
-					int i = bis.read(buffer);
-					while (i != -1) {
-						os.write(buffer, 0, i);
-						i = bis.read(buffer);
-					}
-					return "下载成功";
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					if (bis != null) {
-						try {
-							bis.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-					if (fis != null) {
-						try {
-							fis.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		}
-		return "下载失败";
+		ExportPOIUtil exportPOIUtil = new ExportPOIUtil();
+		List<String> lista= ConvertUtil.toListStrArray(ids);
+		List<Map<String,String>> contentMapList = busDailyLogService.queryListByIDs(lista);
+		System.out.println(JSONObject.toJSONString(contentMapList));
+		exportPOIUtil.getBuild("static/exportModel/dailyLog/dailyModel.doc",contentMapList,"D:/aaa.doc");
+		return success("导出结束！");
 	}
 
 

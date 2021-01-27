@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 施工日志表 BusDailyLogService
@@ -129,4 +130,9 @@ public class BusDailyLogService implements BaseService<BusDailyLog, BusDailyLogE
 	}
 
 
+	public List<Map<String, String>> queryListByIDs(List<String> ids)
+	{
+		List<Map<String, String>> list= busDailyLogMapper.queryListByIDs(ids);
+		return list;
+	}
 }

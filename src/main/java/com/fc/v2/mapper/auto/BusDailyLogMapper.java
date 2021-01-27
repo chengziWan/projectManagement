@@ -6,6 +6,7 @@ import com.fc.bus.model.auto.BusDailyLogExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 施工日志表 BusDailyLogMapper
@@ -36,5 +37,6 @@ public interface BusDailyLogMapper {
     int updateByPrimaryKeySelective(BusDailyLog record);
 
     int updateByPrimaryKey(BusDailyLog record);
-  	  	
+
+    List<Map<String, String>> queryListByIDs(@Param("ids")List<String> ids);
 }
