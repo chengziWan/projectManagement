@@ -245,23 +245,8 @@
             ids = ids.substr(0, ids.length - 1);
             layer.confirm('确定要导出这些数据', {icon: 3, title: '提示'}, function (index) {
                 layer.close(index);
-                let loading = layer.load();
-                $.ajax({
-                    url: MODULE_PATH + "export?ids=" + ids,
-                    dataType: 'json',
-                    type: 'get',
-                    success: function (result) {
-                        layer.close(loading);
-                        if (result.code==200) {
-                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
-                                //table.reload('busDailyLog-table');
-                                window.refresh();
-                            });
-                        } else {
-                            layer.msg(result.msg, {icon: 2, time: 1000});
-                        }
-                    }
-                })
+                var urlpar="ids="+ids;
+                document.location.href=MODULE_PATH + "/export?"+urlpar;
             });
         }
         //刷新按钮

@@ -167,14 +167,14 @@ public class BusDailyLogController extends BaseController{
 	@ApiOperation(value = "导出", notes = "导出")
 	@GetMapping("/export")
 	@ResponseBody
-	public AjaxResult export(String ids, HttpServletRequest request, HttpServletResponse response)
+	public void export(String ids, HttpServletRequest request, HttpServletResponse response)
 	{
 		ExportPOIUtil exportPOIUtil = new ExportPOIUtil();
 		List<String> lista= ConvertUtil.toListStrArray(ids);
 		List<Map<String,String>> contentMapList = busDailyLogService.queryListByIDs(lista);
 		System.out.println(JSONObject.toJSONString(contentMapList));
-		exportPOIUtil.getBuild("static/exportModel/dailyLog/dailyModel.doc",contentMapList,"D:/aaa.doc");
-		return success("导出结束！");
+		exportPOIUtil.getBuild("static/exportModel/dailyLog/dailyModel.doc",contentMapList,response);
+		//return success("导出结束！");
 	}
 
 
