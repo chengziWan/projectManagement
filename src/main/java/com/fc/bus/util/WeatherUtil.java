@@ -2,6 +2,7 @@ package com.fc.bus.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fc.bus.model.auto.BusDailyLog;
+import com.fc.v2.util.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -52,6 +53,9 @@ public class WeatherUtil
             String rBRQ=weather.substring(0,11);
             busDailyLog.setRBRQ(rBRQ);
             String week = CalendarUtil.getWeek(rBRQ);
+            if(StringUtils.isEmpty(week)){
+                continue;
+            }
             busDailyLog.setXQJ(week);
             busDailyLog.setTQ(weather.substring(11));
 
