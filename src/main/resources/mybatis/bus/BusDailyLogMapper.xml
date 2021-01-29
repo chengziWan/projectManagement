@@ -467,7 +467,9 @@
   </update>
   <select id="queryListByIDs" parameterType="list" resultType="map">
     select
-    iD,rBRQ,xQJ,tQ,sGBW,sGNR,xXJD,sGRY,sGJD,jSZLJL,jCCLJL,gCFZR,jLR,tJSJ
+    iD,ifnull(rBRQ,'') rBRQ,ifnull(xQJ,'') xQJ,ifnull(tQ,'') tQ,ifnull(sGBW,'') sGBW,
+    ifnull(sGNR,'') sGNR,ifnull(xXJD,'') xXJD,ifnull(sGRY,'') sGRY,ifnull(sGJD,'') sGJD,ifnull(jSZLJL,'') jSZLJL,
+    ifnull(jCCLJL,'') jCCLJL,ifnull(gCFZR,'') gCFZR,ifnull(jLR,'') jLR,ifnull(tJSJ,'') tJSJ
     from t_bus_daily_log
     where id in
     <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">

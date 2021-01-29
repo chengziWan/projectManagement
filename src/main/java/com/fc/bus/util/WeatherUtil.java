@@ -44,7 +44,12 @@ public class WeatherUtil
             Elements elementsByTag2 = el.getElementsByTag("td");
             for(Element etd:elementsByTag2){
                 String text1 = etd.text();
-                text1 = text1.substring(0,(text1.indexOf("/")<0?text1.length():text1.indexOf("/")));
+                if(text1.indexOf("℃")<=0){
+                    text1 = text1.substring(0,(text1.indexOf("/")<0?text1.length():text1.indexOf("/")));
+                }else{
+                    text1 = text1+" ";
+                }
+
                 //System.out.println(text1);
                 weather += text1;
             }
