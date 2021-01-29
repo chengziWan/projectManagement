@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,25 @@ public class WeatherUtil
         List<BusDailyLog> list = new ArrayList<>();
         Document doc = null;
         try{
-            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html").timeout(4000).get();
-        }catch(IOException e){
-            e.printStackTrace();
+            //https://www.cnblogs.com/interdrp/p/9275303.html  可能会超时
+            //doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html").timeout(10000).get();
+            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html")
+                    .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
+                    .header("Connection", "close")//如果是这种方式，这里务必带上
+                    .timeout(8000)//超时时间
+                    .get();
+        }catch(SocketTimeoutException e){
+            try{
+                doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html")
+                        .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
+                        .header("Connection", "close")//如果是这种方式，这里务必带上
+                        .timeout(8000)//超时时间
+                        .get();
+            }catch(IOException ioException){
+                ioException.printStackTrace();
+            }
+        }catch(Exception ee){
+            ee.printStackTrace();
         }
 
         Elements elementsByTag = doc.getElementById("content").getElementsByTag("tr");
