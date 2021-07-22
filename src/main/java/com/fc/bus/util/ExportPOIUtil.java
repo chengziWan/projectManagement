@@ -232,7 +232,7 @@ public class ExportPOIUtil
 
         return response;
     }
-    private static String getFileNameEncoder(String fileName) throws UnsupportedEncodingException
+    public static String getFileNameEncoder(String fileName) throws UnsupportedEncodingException
     {
         if (false)//isMSIE
         {
