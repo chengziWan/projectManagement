@@ -36,7 +36,7 @@ public class WeatherUtil
         try{
             //https://www.cnblogs.com/interdrp/p/9275303.html  可能会超时
             //doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html").timeout(10000).get();
-            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/"+month+".html")
+            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html")
                     .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
                     .header("Connection", "close")//如果是这种方式，这里务必带上
                     .timeout(8000)//超时时间
