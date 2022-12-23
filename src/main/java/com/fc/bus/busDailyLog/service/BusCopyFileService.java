@@ -144,7 +144,7 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 	 * @Date 2021/7/22 10:55
 	 * @Description  获取上传文件处理下载
 	 */
-	public int copyFile(BusCopyFile busCopyFile, HttpServletResponse response)
+	public int copyFile(BusCopyFile busCopyFile,String tQ_Area, HttpServletResponse response)
 	{
 		try
 		{
@@ -165,7 +165,7 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 		}
 		try{
 
-			XWPFDocument doc = getBuild(busCopyFile);
+			XWPFDocument doc = getBuild(busCopyFile,tQ_Area);
 //			String destPath="施工日志copy"+ DateUtils.getDate()+".docx";
 //			FileOutputStream outStream = null;
 //			outStream = new FileOutputStream(destPath);
@@ -186,7 +186,7 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 		}
 		return 0;
 	}
-	public static XWPFDocument getBuild(BusCopyFile busCopyFile){
+	public static XWPFDocument getBuild(BusCopyFile busCopyFile,String tQ_Area){
 		XWPFDocument doc = null;
 		try{
 			File file = new File(busCopyFile.getFileLocation());
@@ -201,9 +201,9 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 
 			for (int i=0;i<tables.size();i++) {
 				if(i+busCopyFile.getTcts() < tables.size()){
-					parseNewValue(tables.get(i),tables.get(i+busCopyFile.getTcts()));
+					parseNewValue(tables.get(i),tables.get(i+busCopyFile.getTcts()),tQ_Area);
 				}else{
-					parseNewValue(tables.get(i),busCopyFile);
+					parseNewValue(tables.get(i),busCopyFile,tQ_Area);
 				}
                 /*
                 for (XWPFTableRow row : rows) {
@@ -222,7 +222,7 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 		}
 		return doc;
 	}
-	private static void parseNewValue(XWPFTable tableOld,XWPFTable tableNew)
+	private static void parseNewValue(XWPFTable tableOld,XWPFTable tableNew,String tQ_Area)
 	{
 		//获取表格对应的行
 		List<XWPFTableRow> rows = tableNew.getRows();
@@ -241,7 +241,7 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 		System.out.println("new = "+cellsOld.get(1).getText());
 	}
 
-	private static void parseNewValue(XWPFTable tableOld, BusCopyFile busCopyFile)
+	private static void parseNewValue(XWPFTable tableOld, BusCopyFile busCopyFile,String tQ_Area)
 	{
 		List<XWPFTableRow> rowsOld = tableOld.getRows();
 		List<XWPFTableCell> cellsOld = rowsOld.get(0).getTableCells();
@@ -258,7 +258,7 @@ public class BusCopyFileService implements BaseService<BusCopyFile, BusCopyFileE
 		String accDate = getAfterDay(date,busCopyFile.getTcts());
 		String week = CalendarUtil.getWeek(accDate);
 		String cell0NewValue = accDate+"  "+week;
-		String cell1NewValue = WeatherUtil.getWeatherByDay(accDate);
+		String cell1NewValue = WeatherUtil.getWeatherByDay(accDate,tQ_Area);
 
 
 		System.out.println("old = "+cellsOld.get(0).getText());

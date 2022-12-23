@@ -25,25 +25,26 @@ public class WeatherUtil
 {
     public static void main(String[] args)
     {
-            getWeatherByYearMonth("202101");
+        String tQ_Area = "anqiu";
+        getWeatherByYearMonth("202101",tQ_Area);
     }
 
-    public static List<BusDailyLog> getWeatherByYearMonth(String month)
+    public static List<BusDailyLog> getWeatherByYearMonth(String month,String tQ_Area)
     {
 
         List<BusDailyLog> list = new ArrayList<>();
         Document doc = null;
         try{
             //https://www.cnblogs.com/interdrp/p/9275303.html  可能会超时
-            //doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html").timeout(10000).get();
-            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html")
+            //doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/"+tQ_Area+"/month/"+month+".html").timeout(10000).get();
+            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/"+tQ_Area+"/month/"+month+".html")
                     .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
                     .header("Connection", "close")//如果是这种方式，这里务必带上
                     .timeout(8000)//超时时间
                     .get();
         }catch(SocketTimeoutException e){
             try{
-                doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html")
+                doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/"+tQ_Area+"/month/"+month+".html")
                         .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
                         .header("Connection", "close")//如果是这种方式，这里务必带上
                         .timeout(8000)//超时时间
@@ -90,7 +91,7 @@ public class WeatherUtil
         return list;
     }
 
-    public static String getWeatherByDay(String accDate)
+    public static String getWeatherByDay(String accDate,String tQ_Area)
     {
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");// 定义日期格式
         Date date = null;
@@ -104,16 +105,16 @@ public class WeatherUtil
         String weather = "";
         Document doc = null;
         try{
-            //http://www.tianqihoubao.com/lishi/jinan/20210301.html
-            //doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/month/"+month+".html").timeout(10000).get();
-            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/"+accDate2+".html")
+            //http://www.tianqihoubao.com/lishi/"+tQ_Area+"/20210301.html
+            //doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/"+tQ_Area+"/month/"+month+".html").timeout(10000).get();
+            doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/"+tQ_Area+"/"+accDate2+".html")
                     .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
                     .header("Connection", "close")//如果是这种方式，这里务必带上
                     .timeout(8000)//超时时间
                     .get();
         }catch(SocketTimeoutException e){
             try{
-                doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/jinan/"+accDate2+".html")
+                doc = Jsoup.connect("http://www.tianqihoubao.com/lishi/"+tQ_Area+"/"+accDate2+".html")
                         .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0")
                         .header("Connection", "close")//如果是这种方式，这里务必带上
                         .timeout(8000)//超时时间

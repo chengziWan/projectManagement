@@ -6,6 +6,7 @@ import com.fc.v2.common.base.BaseController;
 import com.fc.v2.common.domain.AjaxResult;
 import com.fc.v2.common.domain.ResultTable;
 import com.fc.v2.model.custom.Tablepar;
+import com.fc.v2.util.StringUtils;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -154,7 +155,11 @@ public class BusCopyFileController extends BaseController{
 	public void export(String id, HttpServletRequest request, HttpServletResponse response)
 	{
 		BusCopyFile busCopyFile = busCopyFileService.selectByPrimaryKey(id);
-		busCopyFileService.copyFile(busCopyFile,response);
+		String tQ_Area = busCopyFile.gettQ_Area();
+		if(StringUtils.isEmpty(tQ_Area)){
+			tQ_Area = "jinan";
+		}
+		busCopyFileService.copyFile(busCopyFile,tQ_Area,response);
 		//return success("导出结束！");
 	}
 

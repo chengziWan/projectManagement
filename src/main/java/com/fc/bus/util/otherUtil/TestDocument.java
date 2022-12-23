@@ -23,12 +23,13 @@ public class TestDocument
 {
     public static void main(String[] args)
     {
+        String tQ_Area = "jinan";
         BusCopyFile busCopyFile = new BusCopyFile();
         busCopyFile.setFileLocation("C:\\Users\\19820\\Desktop\\11号楼施工日志202103.docx");
         busCopyFile.setTcts(2);
-        getBuild(busCopyFile);
+        getBuild(busCopyFile,tQ_Area);
     }
-    public static void getBuild(BusCopyFile busCopyFile){
+    public static void getBuild(BusCopyFile busCopyFile,String tQ_Area){
 
         try{
             File file = new File(busCopyFile.getFileLocation());
@@ -40,9 +41,9 @@ public class TestDocument
 
             for (int i=0;i<tables.size();i++) {
                 if(i+busCopyFile.getTcts() < tables.size()){
-                    parseNewValue(tables.get(i),tables.get(i+busCopyFile.getTcts()));
+                    parseNewValue(tables.get(i),tables.get(i+busCopyFile.getTcts()),tQ_Area);
                 }else{
-                    parseNewValue(tables.get(i),busCopyFile);
+                    parseNewValue(tables.get(i),busCopyFile,tQ_Area);
                 }
                 /*
                 for (XWPFTableRow row : rows) {
@@ -61,7 +62,7 @@ public class TestDocument
             e.printStackTrace();
         }
     }
-    private static void parseNewValue(XWPFTable tableOld,XWPFTable tableNew)
+    private static void parseNewValue(XWPFTable tableOld,XWPFTable tableNew,String tQ_Area)
     {
         //获取表格对应的行
         List<XWPFTableRow> rows = tableNew.getRows();
@@ -80,7 +81,7 @@ public class TestDocument
         System.out.println("new = "+cellsOld.get(1).getText());
     }
 
-    private static void parseNewValue(XWPFTable tableOld, BusCopyFile busCopyFile)
+    private static void parseNewValue(XWPFTable tableOld, BusCopyFile busCopyFile,String tQ_Area)
     {
         List<XWPFTableRow> rowsOld = tableOld.getRows();
         List<XWPFTableCell> cellsOld = rowsOld.get(0).getTableCells();
@@ -97,7 +98,7 @@ public class TestDocument
         String accDate = getAfterDay(date,busCopyFile.getTcts());
         String week = CalendarUtil.getWeek(accDate);
         String cell0NewValue = accDate+"  "+week;
-        String cell1NewValue = WeatherUtil.getWeatherByDay(accDate);
+        String cell1NewValue = WeatherUtil.getWeatherByDay(accDate,tQ_Area);
 
 
         System.out.println("old = "+cellsOld.get(0).getText());

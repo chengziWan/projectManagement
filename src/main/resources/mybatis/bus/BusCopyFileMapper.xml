@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.fc.bus.model.auto.BusCopyFile">
     <result column="id" jdbcType="VARCHAR" property="id" />
     <result column="file_location" jdbcType="VARCHAR" property="fileLocation" />
+    <result column="tQ_Area" jdbcType="VARCHAR" property="tQ_Area" />
     <result column="tcts" jdbcType="INTEGER" property="tcts" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,7 +69,7 @@
   
 	  	  	      	id,
        	  	      	file_location,
-       	  	    	  	tcts
+       	  	    	  	tcts,tQ_Area
        	  	
   </sql>
   
@@ -132,6 +133,9 @@
       <if test="tcts != null">
         tcts,
       </if>
+      <if test="tQ_Area != null">
+        tQ_Area,
+      </if>
          </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
           <if test="id != null">
@@ -142,6 +146,9 @@
       </if>
           <if test="tcts != null">
         #{tcts,jdbcType=INTEGER},
+      </if>
+          <if test="tQ_Area != null">
+        #{tQ_Area,jdbcType=VARCHAR},
       </if>
         </trim>
   </insert>
@@ -199,6 +206,9 @@
                       
       <if test="tcts != null">
         tcts = #{tcts,jdbcType=INTEGER},
+      </if>
+      <if test="tQ_Area != null">
+        tcts = #{tQ_Area,jdbcType=VARCHAR},
       </if>
               </set>
     

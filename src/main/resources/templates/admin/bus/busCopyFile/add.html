@@ -12,11 +12,25 @@
 				<div class="layui-form-item">
                     <label class="layui-form-label">模板位置</label>
                     <div class="layui-input-block">
-                        <input type="text" name="fileLocation" autocomplete="off" placeholder="模板位置" class="layui-input">
+                        <input type="hidden" name="fileLocation" autocomplete="off">
+                        <button type="button" class="layui-btn" id="test1">
+                            <i class="layui-icon">&#xe67c;</i>上传模板
+                        </button>
                     </div>
                 </div>
 
 
+				<div class="layui-form-item">
+                    <label class="layui-form-label">天气地区</label>
+                    <div class="layui-input-block">
+
+                        <select name="tQ_Area" id="tQ_Area">
+                            <option value="jinan">济南</option>
+                            <option value="anqiu">潍坊-安丘</option>
+                        </select>
+<!--                     <input type="text" name="tQ_Area" autocomplete="off" placeholder="天气地区" class="layui-input">-->
+                    </div>
+                </div>
 				<div class="layui-form-item">
                     <label class="layui-form-label">推迟天数</label>
                     <div class="layui-input-block">
@@ -42,12 +56,53 @@
 </form>
 <th:block th:include="include :: footer"/>
 <script>
-    layui.use(['form','laydate','jquery'], function () {
+    layui.use(['form','laydate','jquery','upload'], function () {
         let form = layui.form;
         let $ = layui.jquery;
         let MODULE_PATH = rootPath+"/BusCopyFileController";
+
+        //拖拽上传 文档：https://www.layui.com/doc/modules/upload.html
+        upload.render({
+            elem: '#test10'
+            ,url: FILE_PATH+"/object/"+BucketName //改成您自己的上传接口
+            ,field: 'object' //设定文件域的字段名
+            ,done: function(result){
+                if (result.code==200) {
+                    layer.msg('上传成功');
+                    layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', result.data.objectContent.httpRequest.uri);
+                    parent.layui.table.reload("sysFile-table");
+                } else {
+                    layer.msg(result.msg, {icon: 2, time: 1000});
+                }
+            }
+        });
+        // FIXME-WCC: 校验fileLocation上传   [WanCC 2021/7/29  15:56]
+        form.verify({
+            interName: function(value){
+                if(value.length < 2){
+                    return '至少得2个字符';
+                }
+                var msg = "";
+                $.ajax({
+                    url: MODULE_PATH+'/checkNameUnique',
+                    data: "fileName="+value,
+                    dataType: 'json',
+                    type: 'post',
+                    async:false,
+                    success: function (result) {
+                        msg=result;
+                    }
+                });
+                if (msg == 1) {
+                    return "已有相同数据";
+                }
+
+            }
+        });
+
         //保存
         form.on('submit(busCopyFile-save)', function (data) {
+
             $.ajax({
                 url: MODULE_PATH+'/add',
                 data: data.field,

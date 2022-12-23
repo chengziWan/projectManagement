@@ -14,6 +14,8 @@ public class BusCopyFile implements Serializable {
 	
 	@ApiModelProperty(value = "模板位置")
 	private String fileLocation;
+	@ApiModelProperty(value = "天气地区")
+	private String tQ_Area;
 	
 	@ApiModelProperty(value = "推迟天数")
 	private Integer tcts;
@@ -37,6 +39,16 @@ public class BusCopyFile implements Serializable {
 	@JsonProperty("tcts")
 	public Integer getTcts() {
 		return tcts;
+	}
+	@JsonProperty("tQ_Area")
+	public String gettQ_Area()
+	{
+		return tQ_Area;
+	}
+
+	public void settQ_Area(String tQ_Area)
+	{
+		this.tQ_Area = tQ_Area;
 	}
 
 	public void setTcts(Integer tcts) {

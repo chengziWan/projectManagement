@@ -93,8 +93,9 @@ public class BusDailyLogController extends BaseController{
 	@ResponseBody
 	public AjaxResult add(BusDailyLog busDailyLog){
 		String month = busDailyLog.getRBRQ();
+		String tQ_Area = busDailyLog.getTQ();
 		int i=0;
-		List<BusDailyLog> list = WeatherUtil.getWeatherByYearMonth(month);
+		List<BusDailyLog> list = WeatherUtil.getWeatherByYearMonth(month,tQ_Area);
 		for(BusDailyLog log :list){
 			log.setGCFZR(busDailyLog.getGCFZR());
 			log.setJLR(busDailyLog.getJLR());
